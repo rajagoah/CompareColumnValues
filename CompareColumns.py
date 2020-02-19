@@ -8,21 +8,27 @@ print('read complete')
 df=df.drop([1,2], axis = 1)
 print(df.head())
 
-#creating a dataframe to store first column. Using the astype(str) function to help convert the entire dataframe to a string data type
-print('creating a new dataframwe to store column values')
-df_1 = pd.DataFrame(df[[0]].astype(str))
-print(df_1.head(1))
+#creating two different sets to store first and the second column. Using the astype(str) function to help convert the entire dataframe to a string data type
+print('creating a new lists to store column values')
+df_1 = df[0].tolist()
+print(df_1)
 print('done')
 
-df_3 = pd.DataFrame(df[[3]].astype(str))
-print(df_3.head(2))
+df_3 = df[3].tolist()
+print(df_3)
 print('done 3')
+print(type(df_1))
+print(type(df_3))
 
-#comparing the two dataframes and spitting the difference list. For this we will use numpy  
-print('******* the difference is *******')
-df_diff = pd.DataFrame(np.setdiff1d(df_1, df_3, assume_unique= False))
-print(df_diff)
-df_diff.to_csv('/Users/aakarsh.rajagopalan/Personal documents/Datasets for tableau/Tableau project dataset/comparison_dis_rep_prod.csv')
-print('****comparison complete')
+#converting the list to a set
+df_1_set = set(df_1)
+df_3_set = set(df_3)
 
+#comparing the sets using the difference operator
+df_diff = df_3_set.difference(df_1_set)
+print(str(df_diff))
 
+#converting the above set to a df and sending the output as a csv
+df_diff_DF = pd.DataFrame(df_diff)
+print('*************** PRODUCING THE CSV OUTPUT *******************')
+df_diff_DF.to_csv('/Users/aakarsh.rajagopalan/Personal documents/Datasets for tableau/Tableau project dataset/COMPARED_dis_rep_prod.csv')
